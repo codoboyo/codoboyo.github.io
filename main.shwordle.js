@@ -2476,7 +2476,7 @@
       Ua = {
         currentStreak: 0,
         maxStreak: 0,
-        guesses: n({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }, Ja, 0),
+        guesses: n({ 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7:0 }, Ja, 0),
         winPercentage: 0,
         gamesPlayed: 0,
         gamesWon: 0,
@@ -2520,12 +2520,13 @@
           ';\n  }\n\n  #game {\n    width: 100%;\n    max-width: var(--game-max-width);\n    margin: 0 auto;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n  }\n  header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    height: var(--header-height);\n    color: var(--color-tone-1);\n    border-bottom: 1px solid var(--color-tone-4);\n  }\n  header .title {\n    font-weight: 700;\n    font-size: 36px;\n    letter-spacing: 0.2rem;\n    text-transform: uppercase;\n    text-align: center;\n    position: absolute;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n  }\n\n  @media (max-width: 360px) {\n    header .title {\n      font-size: 22px;\n      letter-spacing: 0.1rem;\n    }\n  }\n\n  #board-container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-grow: 1;\n    overflow: hidden;\n  }\n  #board {\n    display: grid;\n    grid-template-rows: repeat(6, 1fr);\n    grid-gap: 5px;\n    padding:10px;\n    box-sizing: border-box;\n  }\n  button.icon {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 0 4px;\n  }\n\n  #debug-tools {\n    position: absolute;\n    bottom: 0;\n  }\n\n  </style>\n  <game-theme-manager>\n    <div id="game">\n      <header>\n        <div class="menu">\n          <button id="help-button" class="icon" aria-label="help">\n            <game-icon icon="help"></game-icon>\n                  </button>\n       </div>\n        <div class="title">\n         SHWORDLE\n        </div>\n        <div class="menu">\n          <button id="statistics-button" class="icon" aria-label="statistics">\n            <game-icon icon="statistics"></game-icon>\n          </button>\n          <button id="settings-button" class="icon" aria-label="settings">\n            <game-icon icon="settings"></game-icon>\n          </button>\n        </div>\n      </header>\n        <div id="board-container">\n          <div id="board"></div>\n        </div>\n        <game-keyboard></game-keyboard>\n        <game-modal></game-modal>\n        <game-page></game-page>\n        <div class="toaster" id="game-toaster"></div>\n        <div class="toaster" id="system-toaster"></div>\n    </div>\n  </game-theme-manager>\n  <div id="debug-tools"></div>\n'
         );
     var Qa = document.createElement("template");
+    var rows = 7;
     Qa.innerHTML =
       '\n<button id="reveal">reveal</button>\n<button id="shake">shake</button>\n<button id="bounce">bounce</button>\n<button id="toast">toast</button>\n<button id="modal">modal</button>\n';
     var Za = "IN_PROGRESS",
       es = "WIN",
       as = "FAIL",
-      ss = ["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew"],
+      ss = ["Genius", "Magnificent", "Impressive", "Splendid", "Great", "Phew", "Sheesh"],
       ts = (function (e) {
         r(t, e);
         var a = h(t);
@@ -2554,8 +2555,8 @@
           return (
             (e.lastPlayedTs = o.lastPlayedTs),
             !e.lastPlayedTs || Na(new Date(e.lastPlayedTs), e.today) >= 1
-              ? ((e.boardState = new Array(6).fill("")),
-                (e.evaluations = new Array(6).fill(null)),
+              ? ((e.boardState = new Array(rows).fill("")),
+                (e.evaluations = new Array(rows).fill(null)),
                 (e.solution = Da(e.today)),
                 (e.dayOffset = Ga(e.today)),
                 (e.lastCompletedTs = o.lastCompletedTs),
@@ -2588,7 +2589,7 @@
             {
               key: "evaluateRow",
               value: function () {
-                if (3 === this.tileIndex && !(this.rowIndex >= 6)) {
+                if (3 === this.tileIndex && !(this.rowIndex >= rows)) {
                   var e,
                     a = this.$board.querySelectorAll("game-row")[this.rowIndex],
                     s = this.boardState[this.rowIndex];
@@ -2668,7 +2669,7 @@
                     )),
                     (a.evaluation = this.evaluations[this.rowIndex]),
                     (this.rowIndex += 1);
-                  var i = this.rowIndex >= 6,
+                  var i = this.rowIndex >= rows,
                     l = r.every(function (e) {
                       return "correct" === e;
                     });
@@ -2773,8 +2774,8 @@
               key: "sizeBoard",
               value: function () {
                 var e = this.shadowRoot.querySelector("#board-container"),
-                  a = Math.min(Math.floor(e.clientHeight * (3 / 6)), 220),
-                  s = 6 * Math.floor(a / 3);
+                  a = Math.min(Math.floor(e.clientHeight * (3 / rows)), 200),
+                  s = rows * Math.floor(a / 3);
                 (this.$board.style.width = "".concat(a, "px")),
                   (this.$board.style.height = "".concat(s, "px"));
               },
@@ -2785,7 +2786,7 @@
                 var e = this.$game.querySelector("game-modal"),
                   a = document.createElement("game-stats");
                 this.gameStatus === es &&
-                  this.rowIndex <= 6 &&
+                  this.rowIndex <= rows &&
                   a.setAttribute("highlight-guess", this.rowIndex),
                   (a.gameApp = this),
                   e.appendChild(a),
@@ -2814,7 +2815,7 @@
                     setTimeout(function () {
                       return e.showHelpModal();
                     }, 100);
-                for (var a = 0; a < 6; a++) {
+                for (var a = 0; a < rows; a++) {
                   var s = document.createElement("game-row");
                   s.setAttribute("letters", this.boardState[a]),
                     s.setAttribute("length", 3),
@@ -2834,7 +2835,7 @@
                     "game-last-tile-revealed-in-row",
                     function (a) {
                       (e.$keyboard.letterEvaluations = e.letterEvaluations),
-                        e.rowIndex < 6 && (e.canInput = !0);
+                        e.rowIndex < rows && (e.canInput = !0);
                       var s =
                         e.$board.querySelectorAll("game-row")[e.rowIndex - 1];
                       (a.path || (a.composedPath && a.composedPath())).includes(
@@ -3221,7 +3222,7 @@
                     if (
                       !(
                         (o = (o = r.trys).length > 0 && o[o.length - 1]) ||
-                        (6 !== n[0] && 2 !== n[0])
+                        (rows !== n[0] && 2 !== n[0])
                       )
                     ) {
                       r = 0;
@@ -3231,7 +3232,7 @@
                       r.label = n[1];
                       break;
                     }
-                    if (6 === n[0] && r.label < o[1]) {
+                    if (rows === n[0] && r.label < o[1]) {
                       (r.label = o[1]), (o = n);
                       break;
                     }
@@ -3244,7 +3245,7 @@
                 }
                 n = a.call(e, r);
               } catch (e) {
-                (n = [6, e]), (t = 0);
+                (n = [rows, e]), (t = 0);
               } finally {
                 s = o = 0;
               }
@@ -3516,7 +3517,7 @@
                               r = JSON.parse(window.localStorage.getItem(j)),
                               i = JSON.parse(window.localStorage.getItem(S)),
                               l = "Shwordle ".concat(s);
-                            (l += " ".concat(n ? t : "X", "/").concat(6)),
+                            (l += " ".concat(n ? t : "X", "/").concat(rows)),
                               o && (l += "*");
                             var d = "";
                             return (
