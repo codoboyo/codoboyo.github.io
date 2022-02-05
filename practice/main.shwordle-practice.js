@@ -1203,15 +1203,15 @@
         })),
       wa = "gameState",
       xa = {
-        boardState: null,
-        evaluations: null,
-        rowIndex: null,
-        solution: null,
-        gameStatus: null,
-        lastPlayedTs: null,
-        lastCompletedTs: null,
-        restoringFromLocalStorage: null,
-        hardMode: !1,
+        boardStateP: null,
+        evaluationsP: null,
+        rowIndexP: null,
+        solutionP: null,
+        gameStatusP: null,
+        lastPlayedTsP: null,
+        lastCompletedTsP: null,
+        restoringFromLocalStorageP: null,
+        hardModeP: !1,
       };
     function za() {
       var e = window.localStorage.getItem(wa) || JSON.stringify(xa);
@@ -1286,13 +1286,13 @@
                     .querySelector("#color-blind-theme")
                     .setAttribute("checked", "");
               var a = za();
-              a.hardMode &&
+              a.hardModeP &&
                 this.shadowRoot
                   .querySelector("#hard-mode")
                   .setAttribute("checked", ""),
-                a.hardMode ||
-                  "IN_PROGRESS" !== a.gameStatus ||
-                  0 === a.rowIndex ||
+                a.hardModeP ||
+                  "IN_PROGRESS" !== a.gameStatusP ||
+                  0 === a.rowIndexP ||
                   (this.shadowRoot
                     .querySelector("#hard-mode")
                     .removeAttribute("checked"),
@@ -2848,9 +2848,7 @@
       return Math.round(t / 864e5);
     }
     function Da(e) {
-      var a,
-        s = Ga(e);
-      return (a = s % La.length), La[a];
+      return La[Math.floor(Math.random() * La.length)];
     }
     function Ga(e) {
       return Na(Ha, e);
@@ -2864,7 +2862,7 @@
       }
       return a;
     }
-    var Ya = "statistics",
+    var Ya = "statisticsP",
       Ja = "fail",
       Ua = {
         currentStreak: 0,
@@ -2913,7 +2911,7 @@
           4e3,
           ";\n  }\n\n  #game {\n    width: 100%;\n    max-width: var(--game-max-width);\n    margin: 0 auto;\n    height: 100%;\n    display: flex;\n    flex-direction: column;\n  }\n  header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    height: var(--header-height);\n    color: var(--color-tone-1);\n    border-bottom: 1px solid var(--color-tone-4);\n  }\n  header .title {\n    font-weight: 700;\n    font-size: 36px;\n    letter-spacing: 0.2rem;\n    text-transform: uppercase;\n    text-align: center;\n    position: absolute;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n  }\n\n  @media (max-width: 360px) {\n    header .title {\n      font-size: 22px;\n      letter-spacing: 0.1rem;\n    }\n  }\n\n  #board-container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-grow: 1;\n    overflow: hidden;\n  }\n  #board {\n    display: grid;\n    grid-template-rows: repeat(" +
             rows +
-            ', 1fr);\n    grid-gap: 5px;\n    padding:10px;\n    box-sizing: border-box;\n  }\n  button.icon {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 0 4px;\n  }\n\n  #debug-tools {\n    position: absolute;\n    bottom: 0;\n  }\n\n  </style>\n  <game-theme-manager>\n    <div id="game">\n      <header>\n        <div class="menu">\n          <button id="help-button" class="icon" aria-label="help">\n            <game-icon icon="help"></game-icon>\n               </button>\n       </div>\n        <div class="title">\n         SHWORDLE\n        </div>\n        <div class="menu">\n          <button id="statistics-button" class="icon" aria-label="statistics">\n            <game-icon icon="statistics"></game-icon>\n          </button>\n          <button id="settings-button" class="icon" aria-label="settings">\n            <game-icon icon="settings"></game-icon>\n          </button>\n        </div>\n      </header>\n        <div id="board-container">\n          <div id="board"></div>\n        </div>\n        <game-keyboard></game-keyboard>\n        <game-modal></game-modal>\n        <game-page></game-page>\n        <div class="toaster" id="game-toaster"></div>\n        <div class="toaster" id="system-toaster"></div>\n    </div>\n  </game-theme-manager>\n  <div id="debug-tools"></div>\n'
+            ', 1fr);\n    grid-gap: 5px;\n    padding:10px;\n    box-sizing: border-box;\n  }\n  button.icon {\n    background: none;\n    border: none;\n    cursor: pointer;\n    padding: 0 4px;\n  }\n\n  #debug-tools {\n    position: absolute;\n    bottom: 0;\n  }\n\n  </style>\n  <game-theme-manager>\n    <div id="game">\n      <header>\n        <div class="menu">\n          <button id="help-button" class="icon" aria-label="help">\n            <game-icon icon="help"></game-icon>\n          </button>\n <button id="reset-button" class="icon" aria-label="reset">\n            <game-icon icon="reset"></game-icon>\n          </button>\n       </div>\n        <div class="title">\n         SHWORDLE\n        </div>\n        <div class="menu">\n          <button id="statisticsP-button" class="icon" aria-label="statisticsP">\n            <game-icon icon="statisticsP"></game-icon>\n          </button>\n          <button id="settings-button" class="icon" aria-label="settings">\n            <game-icon icon="settings"></game-icon>\n          </button>\n        </div>\n      </header>\n        <div id="board-container">\n          <div id="board"></div>\n        </div>\n        <game-keyboard></game-keyboard>\n        <game-modal></game-modal>\n        <game-page></game-page>\n        <div class="toaster" id="game-toaster"></div>\n        <div class="toaster" id="system-toaster"></div>\n    </div>\n  </game-theme-manager>\n  <div id="debug-tools"></div>\n'
         );
     var Qa = document.createElement("template");
     Qa.innerHTML =
@@ -2937,53 +2935,53 @@
           var e;
           s(this, t),
             n(p((e = a.call(this))), "tileIndex", 0),
-            n(p(e), "rowIndex", 0),
-            n(p(e), "solution", void 0),
-            n(p(e), "boardState", void 0),
-            n(p(e), "evaluations", void 0),
+            n(p(e), "rowIndexP", 0),
+            n(p(e), "solutionP", void 0),
+            n(p(e), "boardStateP", void 0),
+            n(p(e), "evaluationsP", void 0),
             n(p(e), "canInput", !0),
-            n(p(e), "gameStatus", Za),
-            n(p(e), "letterEvaluations", {}),
+            n(p(e), "gameStatusP", Za),
+            n(p(e), "letterevaluationsP", {}),
             n(p(e), "$board", void 0),
             n(p(e), "$keyboard", void 0),
             n(p(e), "$game", void 0),
             n(p(e), "today", void 0),
-            n(p(e), "lastPlayedTs", void 0),
-            n(p(e), "lastCompletedTs", void 0),
-            n(p(e), "hardMode", void 0),
+            n(p(e), "lastPlayedTsP", void 0),
+            n(p(e), "lastCompletedTsP", void 0),
+            n(p(e), "hardModeP", void 0),
             n(p(e), "dayOffset", void 0),
             e.attachShadow({ mode: "open" }),
             (e.today = new Date());
           var o = za();
           return (
-            (e.lastPlayedTs = o.lastPlayedTs),
-            !e.lastPlayedTs || Na(new Date(e.lastPlayedTs), e.today) >= 1
-              ? ((e.boardState = new Array(rows).fill("")),
-                (e.evaluations = new Array(rows).fill(null)),
-                (e.solution = Da(e.today)),
+            (e.lastPlayedTsP = o.lastPlayedTsP),
+            !e.lastPlayedTsP || Na(new Date(e.lastPlayedTsP), e.today) >= 0
+              ? ((e.boardStateP = new Array(rows).fill("")),
+                (e.evaluationsP = new Array(rows).fill(null)),
+                (e.solutionP = Da(e.today)),
                 (e.dayOffset = Ga(e.today)),
-                (e.lastCompletedTs = o.lastCompletedTs),
-                (e.hardMode = o.hardMode),
-                (e.restoringFromLocalStorage = !1),
+                (e.lastCompletedTsP = o.lastCompletedTsP),
+                (e.hardModeP = o.hardModeP),
+                (e.restoringFromLocalStorageP = !1),
                 ja({
-                  rowIndex: e.rowIndex,
-                  boardState: e.boardState,
-                  evaluations: e.evaluations,
-                  solution: e.solution,
-                  gameStatus: e.gameStatus,
+                  rowIndexP: e.rowIndexP,
+                  boardStateP: e.boardStateP,
+                  evaluationsP: e.evaluationsP,
+                  solutionP: e.solutionP,
+                  gameStatusP: e.gameStatusP,
                 }),
-                Ca("event", "level_start", { level_name: Wa(e.solution) }))
-              : ((e.boardState = o.boardState),
-                (e.evaluations = o.evaluations),
-                (e.rowIndex = o.rowIndex),
-                (e.solution = o.solution),
+                Ca("event", "level_start", { level_name: Wa(e.solutionP) }))
+              : ((e.boardStateP = o.boardStateP),
+                (e.evaluationsP = o.evaluationsP),
+                (e.rowIndexP = o.rowIndexP),
+                (e.solutionP = o.solutionP),
                 (e.dayOffset = Ga(e.today)),
-                (e.letterEvaluations = Pa(e.boardState, e.evaluations)),
-                (e.gameStatus = o.gameStatus),
-                (e.lastCompletedTs = o.lastCompletedTs),
-                (e.hardMode = o.hardMode),
-                e.gameStatus !== Za && (e.canInput = !1),
-                (e.restoringFromLocalStorage = !0)),
+                (e.letterevaluationsP = Pa(e.boardStateP, e.evaluationsP)),
+                (e.gameStatusP = o.gameStatusP),
+                (e.lastCompletedTsP = o.lastCompletedTsP),
+                (e.hardModeP = o.hardModeP),
+                e.gameStatusP !== Za && (e.canInput = !1),
+                (e.restoringFromLocalStorageP = !0)),
             e
           );
         }
@@ -2992,16 +2990,17 @@
             {
               key: "evaluateRow",
               value: function () {
-                if (3 === this.tileIndex && !(this.rowIndex >= rows)) {
+                if (3 === this.tileIndex && !(this.rowIndexP >= rows)) {
                   var e,
-                    a = this.$board.querySelectorAll("game-row")[this.rowIndex],
-                    s = this.boardState[this.rowIndex];
+                    a =
+                      this.$board.querySelectorAll("game-row")[this.rowIndexP],
+                    s = this.boardStateP[this.rowIndexP];
                   if (((e = s), !Ta.includes(e) && !La.includes(e)))
                     return (
                       a.setAttribute("invalid", ""),
                       void this.addToast("Not in word list")
                     );
-                  if (this.hardMode) {
+                  if (this.hardModeP) {
                     var t = (function (e, a, s) {
                         if (!e || !a || !s) return { validGuess: !0 };
                         for (var t = 0; t < s.length; t++)
@@ -3029,8 +3028,8 @@
                         return { validGuess: !0 };
                       })(
                         s,
-                        this.boardState[this.rowIndex - 1],
-                        this.evaluations[this.rowIndex - 1]
+                        this.boardStateP[this.rowIndexP - 1],
+                        this.evaluationsP[this.rowIndexP - 1]
                       ),
                       o = t.validGuess,
                       n = t.errorMessage;
@@ -3064,15 +3063,15 @@
                         }
                     }
                     return s;
-                  })(s, this.solution);
-                  (this.evaluations[this.rowIndex] = r),
-                    (this.letterEvaluations = Pa(
-                      this.boardState,
-                      this.evaluations
+                  })(s, this.solutionP);
+                  (this.evaluationsP[this.rowIndexP] = r),
+                    (this.letterevaluationsP = Pa(
+                      this.boardStateP,
+                      this.evaluationsP
                     )),
-                    (a.evaluation = this.evaluations[this.rowIndex]),
-                    (this.rowIndex += 1);
-                  var i = this.rowIndex >= rows,
+                    (a.evaluation = this.evaluationsP[this.rowIndexP]),
+                    (this.rowIndexP += 1);
+                  var i = this.rowIndexP >= rows,
                     l = r.every(function (e) {
                       return "correct" === e;
                     });
@@ -3080,26 +3079,26 @@
                     Va({
                       isWin: l,
                       isStreak:
-                        !!this.lastCompletedTs &&
-                        1 === Na(new Date(this.lastCompletedTs), new Date()),
-                      numGuesses: this.rowIndex,
+                        !!this.lastCompletedTsP &&
+                        1 === Na(new Date(this.lastCompletedTsP), new Date()),
+                      numGuesses: this.rowIndexP,
                     }),
-                      ja({ lastCompletedTs: Date.now() }),
-                      (this.gameStatus = l ? es : as),
+                      ja({ lastCompletedTsP: Date.now() }),
+                      (this.gameStatusP = l ? es : as),
                       Ca("event", "level_end", {
-                        level_name: Wa(this.solution),
-                        num_guesses: this.rowIndex,
+                        level_name: Wa(this.solutionP),
+                        num_guesses: this.rowIndexP,
                         success: l,
                       });
                   (this.tileIndex = 0),
                     (this.canInput = !1),
                     ja({
-                      rowIndex: this.rowIndex,
-                      boardState: this.boardState,
-                      evaluations: this.evaluations,
-                      solution: this.solution,
-                      gameStatus: this.gameStatus,
-                      lastPlayedTs: Date.now(),
+                      rowIndexP: this.rowIndexP,
+                      boardStateP: this.boardStateP,
+                      evaluationsP: this.evaluationsP,
+                      solutionP: this.solutionP,
+                      gameStatusP: this.gameStatusP,
+                      lastPlayedTsP: Date.now(),
                     });
                 }
               },
@@ -3107,15 +3106,15 @@
             {
               key: "addLetter",
               value: function (e) {
-                this.gameStatus === Za &&
+                this.gameStatusP === Za &&
                   this.canInput &&
                   (this.tileIndex >= 3 ||
-                    ((this.boardState[this.rowIndex] += e),
+                    ((this.boardStateP[this.rowIndexP] += e),
                     this.$board
                       .querySelectorAll("game-row")
-                      [this.rowIndex].setAttribute(
+                      [this.rowIndexP].setAttribute(
                         "letters",
-                        this.boardState[this.rowIndex]
+                        this.boardStateP[this.rowIndexP]
                       ),
                     (this.tileIndex += 1)));
               },
@@ -3124,17 +3123,20 @@
               key: "removeLetter",
               value: function () {
                 if (
-                  this.gameStatus === Za &&
+                  this.gameStatusP === Za &&
                   this.canInput &&
                   !(this.tileIndex <= 0)
                 ) {
-                  this.boardState[this.rowIndex] = this.boardState[
-                    this.rowIndex
-                  ].slice(0, this.boardState[this.rowIndex].length - 1);
+                  this.boardStateP[this.rowIndexP] = this.boardStateP[
+                    this.rowIndexP
+                  ].slice(0, this.boardStateP[this.rowIndexP].length - 1);
                   var e =
-                    this.$board.querySelectorAll("game-row")[this.rowIndex];
-                  this.boardState[this.rowIndex]
-                    ? e.setAttribute("letters", this.boardState[this.rowIndex])
+                    this.$board.querySelectorAll("game-row")[this.rowIndexP];
+                  this.boardStateP[this.rowIndexP]
+                    ? e.setAttribute(
+                        "letters",
+                        this.boardStateP[this.rowIndexP]
+                      )
                     : e.removeAttribute("letters"),
                     e.removeAttribute("invalid"),
                     (this.tileIndex -= 1);
@@ -3144,12 +3146,12 @@
             {
               key: "submitGuess",
               value: function () {
-                if (this.gameStatus === Za && this.canInput) {
+                if (this.gameStatusP === Za && this.canInput) {
                   if (3 !== this.tileIndex)
                     return (
                       this.$board
                         .querySelectorAll("game-row")
-                        [this.rowIndex].setAttribute("invalid", ""),
+                        [this.rowIndexP].setAttribute("invalid", ""),
                       void this.addToast("Not enough letters")
                     );
                   this.evaluateRow();
@@ -3188,9 +3190,9 @@
               value: function () {
                 var e = this.$game.querySelector("game-modal"),
                   a = document.createElement("game-stats");
-                this.gameStatus === es &&
-                  this.rowIndex <= rows &&
-                  a.setAttribute("highlight-guess", this.rowIndex),
+                this.gameStatusP === es &&
+                  this.rowIndexP <= rows &&
+                  a.setAttribute("highlight-guess", this.rowIndexP),
                   (a.gameApp = this),
                   e.appendChild(a),
                   e.setAttribute("open", "");
@@ -3214,15 +3216,16 @@
                   (this.$keyboard =
                     this.shadowRoot.querySelector("game-keyboard")),
                   this.sizeBoard(),
-                  this.lastPlayedTs ||
+                  this.lastPlayedTsP ||
                     setTimeout(function () {
                       return e.showHelpModal();
                     }, 100);
                 for (var a = 0; a < rows; a++) {
                   var s = document.createElement("game-row");
-                  s.setAttribute("letters", this.boardState[a]),
+                  s.setAttribute("letters", this.boardStateP[a]),
                     s.setAttribute("length", 3),
-                    this.evaluations[a] && (s.evaluation = this.evaluations[a]),
+                    this.evaluationsP[a] &&
+                      (s.evaluation = this.evaluationsP[a]),
                     this.$board.appendChild(s);
                 }
                 this.$game.addEventListener("game-key-press", function (a) {
@@ -3237,25 +3240,25 @@
                   this.$game.addEventListener(
                     "game-last-tile-revealed-in-row",
                     function (a) {
-                      (e.$keyboard.letterEvaluations = e.letterEvaluations),
-                        e.rowIndex < rows && (e.canInput = !0);
+                      (e.$keyboard.letterevaluationsP = e.letterevaluationsP),
+                        e.rowIndexP < rows && (e.canInput = !0);
                       var s =
-                        e.$board.querySelectorAll("game-row")[e.rowIndex - 1];
+                        e.$board.querySelectorAll("game-row")[e.rowIndexP - 1];
                       (a.path || (a.composedPath && a.composedPath())).includes(
                         s
                       ) &&
-                        ([es, as].includes(e.gameStatus) &&
-                          (e.restoringFromLocalStorage
+                        ([es, as].includes(e.gameStatusP) &&
+                          (e.restoringFromLocalStorageP
                             ? e.showStatsModal()
-                            : (e.gameStatus === es &&
+                            : (e.gameStatusP === es &&
                                 (s.setAttribute("win", ""),
-                                e.addToast(ss[e.rowIndex - 1], 2e3)),
-                              e.gameStatus === as &&
-                                e.addToast(e.solution.toUpperCase(), 1 / 0),
+                                e.addToast(ss[e.rowIndexP - 1], 2e3)),
+                              e.gameStatusP === as &&
+                                e.addToast(e.solutionP.toUpperCase(), 1 / 0),
                               setTimeout(function () {
                                 e.showStatsModal();
                               }, 2500))),
-                        (e.restoringFromLocalStorage = !1));
+                        (e.restoringFromLocalStorageP = !1));
                     }
                   ),
                   this.shadowRoot.addEventListener(
@@ -3273,7 +3276,7 @@
                                 1500,
                                 !0
                               )
-                            : ((e.hardMode = o), ja({ hardMode: o })));
+                            : ((e.hardModeP = o), ja({ hardModeP: o })));
                       }
                     }
                   ),
@@ -3302,7 +3305,12 @@
                         s.setAttribute("open", "");
                     }),
                   this.shadowRoot
-                    .getElementById("statistics-button")
+                    .getElementById("reset-button")
+                    .addEventListener("click", function (a) {
+                      window.location.reload();
+                    }),
+                  this.shadowRoot
+                    .getElementById("statisticsP-button")
                     .addEventListener("click", function (a) {
                       e.showStatsModal();
                     }),
@@ -3338,13 +3346,13 @@
                     .addEventListener("click", function () {
                       e.$board
                         .querySelectorAll("game-row")
-                        [e.rowIndex].setAttribute("invalid", "");
+                        [e.rowIndexP].setAttribute("invalid", "");
                     }),
                   this.shadowRoot
                     .getElementById("bounce")
                     .addEventListener("click", function () {
                       var a =
-                        e.$board.querySelectorAll("game-row")[e.rowIndex - 1];
+                        e.$board.querySelectorAll("game-row")[e.rowIndexP - 1];
                       "" === a.getAttribute("win")
                         ? a.removeAttribute("win")
                         : a.setAttribute("win", "");
@@ -3415,7 +3423,7 @@
           var e;
           return (
             s(this, t),
-            n(p((e = a.call(this))), "_letterEvaluations", {}),
+            n(p((e = a.call(this))), "_letterevaluationsP", {}),
             e.attachShadow({ mode: "open" }),
             e
           );
@@ -3423,9 +3431,9 @@
         return (
           o(t, [
             {
-              key: "letterEvaluations",
+              key: "letterevaluationsP",
               set: function (e) {
-                (this._letterEvaluations = e), this._render();
+                (this._letterevaluationsP = e), this._render();
               },
             },
             {
@@ -3511,11 +3519,11 @@
             {
               key: "_render",
               value: function () {
-                for (var e in this._letterEvaluations) {
+                for (var e in this._letterevaluationsP) {
                   var a = this.$keyboard.querySelector(
                     '[data-key="'.concat(e, '"]')
                   );
-                  (a.dataset.state = this._letterEvaluations[e]),
+                  (a.dataset.state = this._letterevaluationsP[e]),
                     a.classList.add("fade");
                 }
               },
@@ -3807,7 +3815,7 @@
     }
     var Cs = document.createElement("template");
     Cs.innerHTML =
-      '\n  <style>\n    .container {\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      padding: 16px 0; \n    }\n    h1 {\n      font-weight: 700;\n      font-size: 16px;\n      letter-spacing: 0.5px;\n      text-transform: uppercase;\n      text-align: center;\n      margin-bottom: 10px;\n    }\n  \n    #statistics {\n      display: flex;\n      margin-bottom: \n    }\n\n    .statistic-container {\n      flex: 1;\n    }\n\n    .statistic-container .statistic {\n      font-size: 36px;\n      font-weight: 400;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      text-align: center;\n      letter-spacing: 0.05em;\n      font-variant-numeric: proportional-nums;\n    }\n\n    .statistic.timer {\n      font-variant-numeric: initial;\n    }\n\n    .statistic-container .label {\n      font-size: 12px;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      text-align: center;\n    }\n\n    #guess-distribution {\n      width: 80%;\n    }\n\n    .graph-container {\n      width: 100%;\n      height: 20px;\n      display: flex;\n      align-items: center;\n      padding-bottom: 4px;\n      font-size: 14px;\n      line-height: 20px;\n    }\n\n    .graph-container .graph {\n      width: 100%;\n      height: 100%;\n      padding-left: 4px;\n    }\n\n    .graph-container .graph .graph-bar {\n      height: 100%;\n      /* Assume no wins */\n      width: 0%;\n      position: relative;\n      background-color: var(--color-absent);\n      display: flex;\n      justify-content: center;\n    }\n\n    .graph-container .graph .graph-bar.highlight {\n      background-color: var(--color-correct);\n    }\n\n    .graph-container .graph .graph-bar.align-right {\n      justify-content: flex-end;\n      padding-right: 8px;\n    }\n\n    .graph-container .graph .num-guesses {\n      font-weight: bold;\n      color: var(--tile-text-color);\n    }\n\n    #statistics,\n    #guess-distribution {\n      padding-bottom: 10px;\n    }\n\n    .footer {\n      display: flex;\n      width: 100%;\n    }\n\n    .countdown {\n      border-right: 1px solid var(--color-tone-1);\n      padding-right: 12px;\n      width: 50%;\n    }\n\n    .share {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      padding-left: 12px;\n      width: 50%;\n    }\n\n    .no-data {\n      text-align: center;\n    }\n\n    button#share-button {\n      background-color: var(--key-bg-correct);\n      color: var(--key-evaluated-text-color);\n      font-family: inherit;\n      font-weight: bold;\n      border-radius: 4px;\n      cursor: pointer;\n      border: none;\n      user-select: none;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      text-transform: uppercase;\n      -webkit-tap-highlight-color: rgba(0,0,0,0.3);\n      width: 80%;\n      font-size: 20px;\n      height: 52px;\n      -webkit-filter: brightness(100%);\n    }\n    button#share-button:hover {\n      opacity: 0.9;\n    }\n    button#share-button game-icon {\n      width: 24px;\n      height: 24px;\n      padding-left: 8px;\n    }\n  </style>\n\n  <div class="container">\n    <h1>Statistics</h1>\n    <div id="statistics"></div>\n    <h1>Guess Distribution</h1>\n    <div id="guess-distribution"></div>\n    <div class="footer"></div>\n  </div>\n';
+      '\n  <style>\n    .container {\n      display: flex;\n      flex-direction: column;\n      align-items: center;\n      justify-content: center;\n      padding: 16px 0; \n    }\n    h1 {\n      font-weight: 700;\n      font-size: 16px;\n      letter-spacing: 0.5px;\n      text-transform: uppercase;\n      text-align: center;\n      margin-bottom: 10px;\n    }\n  \n    #statisticsP {\n      display: flex;\n      margin-bottom: \n    }\n\n    .statistic-container {\n      flex: 1;\n    }\n\n    .statistic-container .statistic {\n      font-size: 36px;\n      font-weight: 400;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      text-align: center;\n      letter-spacing: 0.05em;\n      font-variant-numeric: proportional-nums;\n    }\n\n    .statistic.timer {\n      font-variant-numeric: initial;\n    }\n\n    .statistic-container .label {\n      font-size: 12px;\n      display: flex;\n      align-items: center;\n      justify-content: center;\n      text-align: center;\n    }\n\n    #guess-distribution {\n      width: 80%;\n    }\n\n    .graph-container {\n      width: 100%;\n      height: 20px;\n      display: flex;\n      align-items: center;\n      padding-bottom: 4px;\n      font-size: 14px;\n      line-height: 20px;\n    }\n\n    .graph-container .graph {\n      width: 100%;\n      height: 100%;\n      padding-left: 4px;\n    }\n\n    .graph-container .graph .graph-bar {\n      height: 100%;\n      /* Assume no wins */\n      width: 0%;\n      position: relative;\n      background-color: var(--color-absent);\n      display: flex;\n      justify-content: center;\n    }\n\n    .graph-container .graph .graph-bar.highlight {\n      background-color: var(--color-correct);\n    }\n\n    .graph-container .graph .graph-bar.align-right {\n      justify-content: flex-end;\n      padding-right: 8px;\n    }\n\n    .graph-container .graph .num-guesses {\n      font-weight: bold;\n      color: var(--tile-text-color);\n    }\n\n    #statisticsP,\n    #guess-distribution {\n      padding-bottom: 10px;\n    }\n\n    .footer {\n      display: flex;\n      width: 100%;\n    }\n\n    .countdown {\n      border-right: 1px solid var(--color-tone-1);\n      padding-right: 12px;\n      width: 50%;\n    }\n\n    .share {\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      padding-left: 12px;\n      width: 50%;\n    }\n\n    .no-data {\n      text-align: center;\n    }\n\n    button#share-button {\n      background-color: var(--key-bg-correct);\n      color: var(--key-evaluated-text-color);\n      font-family: inherit;\n      font-weight: bold;\n      border-radius: 4px;\n      cursor: pointer;\n      border: none;\n      user-select: none;\n      display: flex;\n      justify-content: center;\n      align-items: center;\n      text-transform: uppercase;\n      -webkit-tap-highlight-color: rgba(0,0,0,0.3);\n      width: 80%;\n      font-size: 20px;\n      height: 52px;\n      -webkit-filter: brightness(100%);\n    }\n    button#share-button:hover {\n      opacity: 0.9;\n    }\n    button#share-button game-icon {\n      width: 24px;\n      height: 24px;\n      padding-left: 8px;\n    }\n  </style>\n\n  <div class="container">\n    <h1>practice statistics</h1>\n    <div id="statisticsP"></div>\n    <h1>Guess Distribution</h1>\n    <div id="guess-distribution"></div>\n    <div class="footer"></div>\n  </div>\n';
     var Ls = document.createElement("template");
     Ls.innerHTML =
       '\n  <div class="statistic-container">\n    <div class="statistic"></div>\n    <div class="label"></div>\n  </div>\n';
@@ -3846,7 +3854,7 @@
               value: function () {
                 var e = this;
                 this.shadowRoot.appendChild(Cs.content.cloneNode(!0));
-                var a = this.shadowRoot.getElementById("statistics"),
+                var a = this.shadowRoot.getElementById("statisticsP"),
                   s = this.shadowRoot.getElementById("guess-distribution"),
                   t = Math.max.apply(
                     Math,
@@ -3901,7 +3909,7 @@
                       (n.querySelector(".statistic").textContent = o),
                       a.appendChild(n);
                   }),
-                  this.gameApp.gameStatus !== Za)
+                  this.gameApp.gameStatusP !== Za)
                 ) {
                   var p = this.shadowRoot.querySelector(".footer"),
                     m = Is.content.cloneNode(!0);
@@ -3912,14 +3920,14 @@
                         a.preventDefault(), a.stopPropagation();
                         As(
                           (function (e) {
-                            var a = e.evaluations,
+                            var a = e.evaluationsP,
                               s = e.dayOffset,
-                              t = e.rowIndex,
-                              o = e.isHardMode,
+                              t = e.rowIndexP,
+                              o = e.ishardModeP,
                               n = e.isWin,
                               r = JSON.parse(window.localStorage.getItem(j)),
                               i = JSON.parse(window.localStorage.getItem(S)),
-                              l = "Shwordle ".concat(s);
+                              l = "Practice Shwordle ".concat(s);
                             (l += " ".concat(n ? t : "X", "/").concat(rows)),
                               o && (l += "*");
                             var d = "";
@@ -3954,15 +3962,15 @@
                                 text: ""
                                   .concat(l, "\n\n")
                                   .concat(d.trimEnd())
-                                  .concat("\n\nhttps://shwordle.xyz"),
+                                  .concat("\n\nhttps://shwordle.xyz/practice"),
                               }
                             );
                           })({
-                            evaluations: e.gameApp.evaluations,
+                            evaluationsP: e.gameApp.evaluationsP,
                             dayOffset: e.gameApp.dayOffset,
-                            rowIndex: e.gameApp.rowIndex,
-                            isHardMode: e.gameApp.hardMode,
-                            isWin: e.gameApp.gameStatus === es,
+                            rowIndexP: e.gameApp.rowIndexP,
+                            ishardModeP: e.gameApp.hardModeP,
+                            isWin: e.gameApp.gameStatusP === es,
                           }),
                           function () {
                             e.gameApp.addToast(
@@ -4042,7 +4050,7 @@
     $s.innerHTML =
       '\n  <style>\n  .instructions {\n    font-size: 14px;\n    color: var(--color-tone-1)\n  }\n\n  .examples {\n    border-bottom: 1px solid var(--color-tone-4);\n    border-top: 1px solid var(--color-tone-4);\n  }\n\n  .example {\n    margin-top: 24px;\n    margin-bottom: 24px;\n  }\n\n  game-tile {\n    width: 40px;\n    height: 40px;\n  }\n\n  :host([page]) section {\n    padding: 16px;\n    padding-top: 0px;\n  }\n\n  </style>\n  <section>\n    <div class="instructions">\n      <p>Guess the <strong>SHWORDLE</strong> in ' +
       rows +
-      ' tries.</p>\n  <p><strong>Note:</strong> This is a short version of <a href="https://www.powerlanguage.co.uk/wordle/">WORDLE</a> (the guessing game created by <a href="https://twitter.com/powerlanguish">Josh Wardle</a>).</p>    <p>Each guess must be a valid 3 letter word. Hit the enter button to submit.</p>\n      <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>\n      <div class="examples">\n        <p><strong>Examples</strong></p>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="y" evaluation="correct" reveal></game-tile>\n            <game-tile letter="e"></game-tile>\n            <game-tile letter="s"></game-tile>\n                  </div>\n          <p>The letter <strong>Y</strong> is in the word and in the correct spot.</p>\n        </div>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="s"></game-tile>\n            <game-tile letter="i" evaluation="present" reveal></game-tile>\n            <game-tile letter="r"></game-tile>\n                  </div>\n          <p>The letter <strong>I</strong> is in the word but in the wrong spot.</p>\n        </div>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="b"></game-tile>\n            <game-tile letter="r"></game-tile>\n            <game-tile letter="o" evaluation="absent" reveal></game-tile>\n                 </div>\n          <p>The letter <strong>O</strong> is not in the word in any spot.</p>\n        </div>\n      </div>\n        <p><strong>A new SHWORDLE will be available each day or <a href="https://shwordle.xyz/practice">PRACTICE</a> with no daily limit!</strong></p>\n  </div>\n  </section>\n';
+      ' tries.</p>\n  <p><strong>Note:</strong> This is a short version of <a href="https://www.powerlanguage.co.uk/wordle/">WORDLE</a> (the guessing game created by <a href="https://twitter.com/powerlanguish">Josh Wardle</a>).</p>    <p>Each guess must be a valid 3 letter word. Hit the enter button to submit.</p>\n      <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>\n      <div class="examples">\n        <p><strong>Examples</strong></p>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="y" evaluation="correct" reveal></game-tile>\n            <game-tile letter="e"></game-tile>\n            <game-tile letter="s"></game-tile>\n                  </div>\n          <p>The letter <strong>Y</strong> is in the word and in the correct spot.</p>\n        </div>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="s"></game-tile>\n            <game-tile letter="i" evaluation="present" reveal></game-tile>\n            <game-tile letter="r"></game-tile>\n                  </div>\n          <p>The letter <strong>I</strong> is in the word but in the wrong spot.</p>\n        </div>\n        <div class="example">\n          <div class="row">\n            <game-tile letter="b"></game-tile>\n            <game-tile letter="r"></game-tile>\n            <game-tile letter="o" evaluation="absent" reveal></game-tile>\n                 </div>\n          <p>The letter <strong>O</strong> is not in the word in any spot.</p>\n        </div>\n      </div>\n        <p><strong>A new <a href="https://shwordle.xyz">SHWORDLE</a> will be available each day or PRACTICE with no daily limit!</strong></p>\n  </div>\n  </section>\n';
     var Hs = (function (e) {
       r(t, e);
       var a = h(t);
@@ -4122,7 +4130,7 @@
           "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
         share:
           "M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z",
-        statistics:
+        statisticsP:
           "M16,11V3H8v6H2v12h20V11H16z M10,5h4v14h-4V5z M4,11h4v8H4V11z M20,19h-4v-6h4V19z",
       },
       Fs = (function (e) {

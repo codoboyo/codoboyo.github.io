@@ -1,0 +1,16 @@
+{
+    "short_name": "Shwordle",
+    "name": "Shwordle",
+    "icons": [
+      {
+        "src": "/images/sheesh.png",
+        "type": "image/png",
+        "sizes": "128x128"
+      }
+    ],
+    "start_url": "https://shwordle.xyz",
+    "background_color": "#6aaa64",
+    "display": "standalone",
+    "theme_color": "#6aaa64",
+    "description": "A daily word game"
+  }
